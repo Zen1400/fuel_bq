@@ -7,7 +7,7 @@ import json
 
 
 
-# Get the credentials from the environment
+# Get the credentials from the environment (using GH secrets)
 credentials_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 credentials_info = json.loads(credentials_json)
 
