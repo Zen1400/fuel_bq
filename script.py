@@ -18,9 +18,9 @@ CSV_FILE_PATH = 'daily_prices.csv'
 
 
 # BigQuery configuration      (Update with your GCP project ID, dataset ID and table ID)
-PROJECT_ID = 'your project'    # Update with your GCP project ID
-DATASET_ID = 'dataset'    # Update with your dataset ID
-TABLE_ID = 'table'
+PROJECT_ID = 'trans-engine-356414'    # Update with your GCP project ID
+DATASET_ID = 'fuel'    # Update with your dataset ID
+TABLE_ID = 'daily_price'
 
 
 # Download and read the CSV file
@@ -42,6 +42,8 @@ df.columns = ["station_id", "latitude", "longitude", "code_postal", "pop", "adre
               "debut_rupture_gazole", "type_rupture_gazole", 'carburants_dispos','carburants_indispos',
               'carburants_rupture_tempo', 'carburants_rupture_def', 'automate_24', 'services_propos', 'departement',
               'code_depart', 'region', 'code_region', 'horaires_detail']
+
+
 df.to_csv(CSV_FILE_PATH, index=False)
 
 
@@ -70,4 +72,4 @@ with open(CSV_FILE_PATH, 'rb') as source_file:
         job_config=job_config
         )
 
-job.result()  # Wait for job to complete
+job.result()
