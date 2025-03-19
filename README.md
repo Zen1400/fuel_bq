@@ -55,7 +55,8 @@ ____________________________________
 
 - ***events*** : Specify when the workflow should run. Common events include push, pull_request, schedule, and workflow_dispatch
 
-```` on:
+```
+on:
   push:
     branches:
       - main
@@ -63,4 +64,8 @@ ____________________________________
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC````
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+
+```
+
+- ***Jobs*** : Define the jobs in your workflow. Each job runs on a specified runner.
