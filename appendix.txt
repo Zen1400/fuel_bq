@@ -1,0 +1,61 @@
+Explanation of the concepts used in the project :
+
+
+1)  ################## Cron Jobs##############
+A Cron Job is a time-based job scheduler in Unix-like operating systems (e.g. Linux).
+It allows you to run commands or scripts at specified times and intervals.
+
+
+Cron Syntax
+A cron expression is a string consisting of five fields separated by spaces:
+
+* * * * *
+│ │ │ │ │
+│ │ │ │ └── Day of the week (0 - 7) (Sunday is both 0 and 7)
+│ │ │ └──── Month (1 - 12)
+│ │ └────── Day of the month (1 - 31)
+│ └──────── Hour (0 - 23)
+└────────── Minute (0 - 59)
+
+Common Examples
+0 0 * * * - Every day at midnight
+0 12 * * * - Every day at noon
+0 18 * * 5 - Every Friday at 6 PM
+*/15 * * * * - Every 15 minutes
+
+
+Special Characters
+* - Matches any value
+, - Separates items of a list
+- - Defines a range
+/ - Specifies a step value
+####################################################################
+
+
+2) ############################ requirements ########################
+
+- This is a file that contains all libraries (dependencies) necessary to run the project.
+
+- For example, it has : numpy==2.2.4        (this specific version of Numpy is used in the project)
+
+- Once you clone a given GH repo, you could use pip to install all the librabries in requirements.txt
+
+#############################################################
+
+
+3) ############################## Gitignore ##########################
+
+- It's crucial to avoid pushing sensetive files like secrets and service accounts to public repositories
+  so, in gitignore we put the names of files that we want git to ignore once we push our code, so
+
+
+4) ####################### GitHub Secets ##############################
+
+- Secure storage for GCP credentials
+
+
+5) ##################### GitHub Actions ######################
+
+- Automates and runs code on an environment we specify. We use it to run Python code on an Ubuntu Linux
+
+- It's based on the file  ".github/workflows/data_pipeline.yml"

@@ -72,5 +72,3 @@ with open(CSV_FILE_PATH, 'rb') as source_file:
         )
 
 job.result()  # Wait for job to complete
-
-print(job.state)  # Confirm the job is complete

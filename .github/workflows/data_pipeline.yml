@@ -1,10 +1,10 @@
 name: Daily CSV to BigQuery
 on:
   schedule:
-    - cron: '0 12 * * *'  # 9 AM UTC daily (adjust timezone offset as needed)
+    - cron: '0 12 * * *'  #  it's in UTC, so it runs at 1 PM CET everyday
   workflow_dispatch:     # Allows manual triggering
 
-jobs:
+jobs: AM UTC
   run-pipeline:
     runs-on: ubuntu-latest
     env:
