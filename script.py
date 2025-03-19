@@ -3,7 +3,13 @@ from google.cloud import bigquery
 import os
 from datetime import datetime
 import pandas as pd
+import json
 
+
+
+# Get the credentials from the environment
+credentials_json = os.environ.get('GCP_CREDENTIALS_JSON')
+credentials_info = json.loads(credentials_json)
 
 # Configuration
 URL = "https://www.data.gouv.fr/fr/datasets/r/edd67f5b-46d0-4663-9de9-e5db1c880160"
@@ -42,7 +48,7 @@ print("Pandas df")
 print(df.head())
 
 # Upload to BigQuery
-client = bigquery.Client.from_service_account_json(SERVICE_ACCOUNT_JSON)
+client = bigquery.Client.from_service_account_info(credentials_info)
 table_ref = client.dataset(DATASET_ID).table(TABLE_ID)
 
 print("Preparing the LoadJobConfig")
