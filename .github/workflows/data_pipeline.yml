@@ -1,0 +1,27 @@
+name: Daily CSV to BigQuery
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 9 AM UTC daily (adjust timezone offset as needed)
+  workflow_dispatch:     # Allows manual triggering
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS_JSON }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10.6"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run CSV to BigQuery pipeline
+      run: python script.py
