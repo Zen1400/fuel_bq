@@ -7,20 +7,20 @@ import json
 
 
 
-# Get the credentials from the environment (using GH secrets)
+# Get the credentials from the environment variable (using GH secrets)
 credentials_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 credentials_info = json.loads(credentials_json)
 
-# Configuration
+# URL of the CSV file + path to save it
 URL = "https://www.data.gouv.fr/fr/datasets/r/edd67f5b-46d0-4663-9de9-e5db1c880160"
 CSV_FILE_PATH = 'daily_prices.csv'
-SERVICE_ACCOUNT_JSON = 'fuel.json'
 
 
-# BigQuery configuration
-PROJECT_ID = 'trans-engine-356414'    # Update with your GCP project ID
-DATASET_ID = 'fuel'    # Update with your dataset ID
-TABLE_ID = 'daily_price'
+
+# BigQuery configuration      (Update with your GCP project ID, dataset ID and table ID)
+PROJECT_ID = 'your project'    # Update with your GCP project ID
+DATASET_ID = 'dataset'    # Update with your dataset ID
+TABLE_ID = 'table'
 
 
 # Download and read the CSV file
@@ -30,7 +30,7 @@ with open(CSV_FILE_PATH, 'wb') as f:
     f.write(r.content)
 
 
-# Read the df with Pandas and then ceate a csv
+# Read the df with Pandas and then ceate a csv (was needed because of an error reading columns with french accents)
 df = pd.read_csv(CSV_FILE_PATH, sep = ';')
 
 df.columns = ["station_id", "latitude", "longitude", "code_postal", "pop", "adresse", "ville", "services", "prix", "rupture",
@@ -44,14 +44,13 @@ df.columns = ["station_id", "latitude", "longitude", "code_postal", "pop", "adre
               'code_depart', 'region', 'code_region', 'horaires_detail']
 df.to_csv(CSV_FILE_PATH, index=False)
 
-print("Pandas df")
-print(df.head())
+
 
 # Upload to BigQuery
 client = bigquery.Client.from_service_account_info(credentials_info)
 table_ref = client.dataset(DATASET_ID).table(TABLE_ID)
 
-print("Preparing the LoadJobConfig")
+
 
 # Configure load job
 job_config = bigquery.LoadJobConfig(
@@ -59,11 +58,11 @@ job_config = bigquery.LoadJobConfig(
     field_delimiter=',',
     skip_leading_rows=1,  # Adjust if your CSV doesn't have header
     autodetect=True,      # Automatically detect schema
-    write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE
+    write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE   # to override the table by the new csv everyday
 )
 
-print("Uploading the file")
-# Upload file
+
+# Upload file to BQ
 with open(CSV_FILE_PATH, 'rb') as source_file:
     job = client.load_table_from_file(
         source_file,
