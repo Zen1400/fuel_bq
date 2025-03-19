@@ -27,7 +27,7 @@ with open(CSV_FILE_PATH, 'wb') as f:
 # Read the df with Pandas and then ceate a csv
 df = pd.read_csv(CSV_FILE_PATH, sep = ';')
 
-df.columns = ["id", "latitude", "longitude", "code_postal", "pop", "adresse", "ville", "services", "prix", "rupture",
+df.columns = ["station_id", "latitude", "longitude", "code_postal", "pop", "adresse", "ville", "services", "prix", "rupture",
               "horaires", "geom", "prix_gazole_updated", "prix_gazole", "prix_sp95_updated", "prix_sp95",
               "prix_e85_updated", "prix_e85", "prix_gplc_updated", "prix_gplc", "prix_e10_updated", "prix_ep10",
               "prix_sp98_updated", "prix_sp98", "debut_rupture_e10", "type_rupture_e10",
